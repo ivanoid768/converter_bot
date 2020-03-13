@@ -1,0 +1,26 @@
+{
+  "name": "converter_bot",
+  "version": "1.0.0",
+  "description": "Telegram bot that can convert audio files between many different formats.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanoid768/converter_bot.git"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "convert",
+    "converter",
+    "audio"
+  ],
+  "author": "ivanoid256",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivanoid768/converter_bot/issues"
+  },
+  "homepage": "https://github.com/ivanoid768/converter_bot#readme"
+}
