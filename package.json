@@ -41,5 +41,8 @@
   "bugs": {
     "url": "https://github.com/ivanoid768/converter_bot/issues"
   },
-  "homepage": "https://github.com/ivanoid768/converter_bot#readme"
+  "homepage": "https://github.com/ivanoid768/converter_bot#readme",
+  "dependencies": {
+    "telegraf": "^3.36.0"
+  }
 }
