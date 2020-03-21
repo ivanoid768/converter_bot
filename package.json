@@ -46,6 +46,7 @@
   "homepage": "https://github.com/ivanoid768/converter_bot#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "bullmq": "^1.8.4",
     "dotenv": "^8.2.0",
     "fluent-ffmpeg": "^2.1.2",
     "telegraf": "^3.36.0"
