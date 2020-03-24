@@ -27,6 +27,7 @@ export const worker = new Worker<IConvertJob>(CONVERT_QUEUE, async (job: Job<ICo
 
     // title: `${ctx.session.audioName}.${outFormat}`
     await telegram.sendDocument(ctx.clientId, { source: output, filename: filename }, { caption: 'File convertion done!' })
+    await telegram.sendMessage(ctx.clientId, `Do you want me to convert something else? Just send me an audio file.`)
 
     return job.id;
 }, {

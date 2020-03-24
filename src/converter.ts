@@ -1,10 +1,23 @@
 import ffmpeg, { FfprobeData, Format, Codec } from 'fluent-ffmpeg';
 import { Readable } from 'stream';
 
+let formats: string[] = [];
+let codecs: string[] = [];
+
+async function init() {
+    console.log('Converter init!');
+    formats = (await getFormats()).map(format => format.name);
+    codecs = (await getAudioCodecs()).map(codec => codec.name);
+}
+
+init()
+
 export async function convert(file: Readable, outFormat: string) {
-    if (outFormat === 'wma') {
+    if (codecs.indexOf(outFormat) !== -1) {
+        console.log('codecFormat: ', outFormat);
+
         return ffmpeg(file)
-            .audioCodec('wmav2')
+            .audioCodec(outFormat)
             .outputFormat('asf')
             .pipe()
     }
