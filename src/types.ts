@@ -11,4 +11,5 @@ export interface IConvertJobData {
     outFormat: string;
     fileLink: string;
     audioName: string;
+    outExt: string;
 }

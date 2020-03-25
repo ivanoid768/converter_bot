@@ -1,19 +1,22 @@
 import { createReadStream, createWriteStream } from 'fs';
 import ffmpeg from 'fluent-ffmpeg';
-import { convert } from './converter';
+import { convert, getFormats } from './converter';
 import { PassThrough } from 'stream';
 import { env } from 'process';
 import { inspect } from 'util';
 
 export async function main() {
+    let formats = await getFormats()
+    console.log(inspect(formats, true, 10, true));
+
     console.log(env.FFPROBE_PATH);
-    let input = createReadStream('../13 Wasted Air.mp3')
-    return ffmpeg(input)
-        // .outputFormat('Windows Media Audio 2')
-        .audioCodec('wmav2')
-        .format('asf')
-        .pipe()
-        // .save('./temp/13 Wasted Air.wma')
+    // let input = createReadStream('../13 Wasted Air.mp3')
+    // return ffmpeg(input)
+    //     // .outputFormat('Windows Media Audio 2')
+    //     .audioCodec('wmav2')
+    //     .format('asf')
+    //     .pipe()
+    // .save('./temp/13 Wasted Air.wma')
     // .ffprobe((data) => {
     //     console.log(inspect(data, true, 10, true));
 

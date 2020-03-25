@@ -13,6 +13,7 @@ interface ISessionContext extends ContextMessageUpdate {
         audio: Audio;
         audioName: string;
         audioFormat: string;
+        audioExt: string;
     }>
 }
 
@@ -53,13 +54,7 @@ bot.on('audio', async (ctx) => {
     ctx.session.audioFormat = fileMediaMeta.format.format_name || audio.mime_type;
 })
 
-bot.hears((text: string) => {
-    console.log('hears: ', text);
-    let formats = config.outputFormats.filter(format => format.indexOf(text) !== -1)
-    console.log('outputFormat: ', formats);
-
-    return formats.length > 0;
-}, async (ctx) => {
+bot.on('message', async (ctx) => {
     console.log('session: ', ctx.session);
     if (!ctx.session.fileLink || !ctx.update.message?.text) {
         return;
@@ -67,27 +62,33 @@ bot.hears((text: string) => {
 
     let inpText = ctx.update.message.text;
     let formats = config.outputFormats.filter(format => format.indexOf(inpText) !== -1)
+    if (formats.length <= 0) {
+        await ctx.reply(`Sorry, Boss. I can't convert to ${inpText} :( . Maybe You want to convert to some other format?`)
+
+        return;
+    }
     if (formats.length > 1) {
         outFormatList = formats;
         let formatsText = formats.join('\n')
-        let inlineFormats = formats.map(format => ({
+        let inlineFormats = formats.map(format => ([{
             callback_data: format,
             text: format,
-        }))
+        }]))
 
         await ctx.reply(`Your input ${inpText} match some formats: \n ${formatsText} \n Which one to choose?`, {
             reply_markup: {
-                inline_keyboard: [
-                    inlineFormats
-                ]
+                inline_keyboard: inlineFormats
             }
         })
+
+        ctx.session.audioExt = inpText;
 
         return;
     }
 
+    ctx.session.audioExt = inpText;
     console.log(ctx.update.message.text, ctx.update.message?.text);
-    let outFormat = ctx.update.message?.text;
+    let outFormat = formats[0];
     await startConversion(ctx, outFormat)
 })
 
@@ -113,9 +114,11 @@ async function startConversion(ctx: ISessionContext, outFormat: string) {
         audioName: ctx.session.audioName as string,
         fileLink: ctx.session.fileLink as string,
         outFormat: outFormat as string,
+        outExt: ctx.session.audioExt as string,
     })
 
-    ctx.session.fileLink = undefined;
+    delete ctx.session.audioExt;
+    delete ctx.session.fileLink;
 }
 
 export default bot;

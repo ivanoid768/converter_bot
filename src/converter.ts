@@ -13,14 +13,7 @@ async function init() {
 init()
 
 export async function convert(file: Readable, outFormat: string) {
-    if (codecs.indexOf(outFormat) !== -1) {
-        console.log('codecFormat: ', outFormat);
-
-        return ffmpeg(file)
-            .audioCodec(outFormat)
-            .outputFormat('asf')
-            .pipe()
-    }
+    console.log(outFormat);
 
     return ffmpeg(file)
         .outputFormat(outFormat)
@@ -92,7 +85,7 @@ export async function getOutputFormats() {
     let formats = await getFormats()
     let codecs = await getAudioCodecs()
     let codecsNames = codecs.filter(codec => codec.codecProps.canEncode === true).map(codec => codec.name)
-    let formatNames = formats.map(format => format.name)
+    let formatNames = formats.filter(format => format.formatProps.canMux === true).map(format => format.name)
 
     return { formatNames, codecsNames }
 }

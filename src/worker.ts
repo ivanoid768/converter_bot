@@ -17,6 +17,7 @@ export const worker = new Worker<IConvertJob>(CONVERT_QUEUE, async (job: Job<ICo
     let file = await axios.get<Readable>(ctx.fileLink, { responseType: 'stream' })
 
     let output = await convert(file.data, ctx.outFormat) as PassThrough;
+    console.log(output);
 
     let filename = `${ctx.audioName?.replace(/[.].*$/i, '')}.${ctx.outFormat}`
     console.log(filename);

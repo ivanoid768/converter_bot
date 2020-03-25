@@ -5,7 +5,7 @@ import { getOutputFormats } from "./converter";
 
 export async function main() {
     console.log('Start worker: ', worker.name);
-    let { formatNames, codecsNames } = await getOutputFormats()
-    config.outputFormats = [...formatNames, ...codecsNames]
+    let { formatNames } = await getOutputFormats()
+    config.outputFormats = formatNames;
     bot.launch()
 }
