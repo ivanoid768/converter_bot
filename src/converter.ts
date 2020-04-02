@@ -1,16 +1,16 @@
 import ffmpeg, { FfprobeData, Format, Codec } from 'fluent-ffmpeg';
 import { Readable } from 'stream';
 
-let formats: string[] = [];
-let codecs: string[] = [];
+// let formats: string[] = [];
+// let codecs: string[] = [];
 
-async function init() {
-    console.log('Converter init!');
-    formats = (await getFormats()).map(format => format.name);
-    codecs = (await getAudioCodecs()).map(codec => codec.name);
-}
+// async function init() {
+//     console.log('Converter init!');
+//     formats = (await getFormats()).map(format => format.name);
+//     codecs = (await getAudioCodecs()).map(codec => codec.name);
+// }
 
-init()
+// init()
 
 export async function convert(file: Readable, outFormat: string) {
     console.log(outFormat);

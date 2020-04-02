@@ -3,7 +3,7 @@ import { env } from 'process';
 
 export const CONVERT_QUEUE = 'CONVERT_QUEUE';
 
-const REDIS_HOST = 'localhost';
+const REDIS_HOST = env.REDIS_HOST;
 const REDIS_PASSWORD = env.REDIS_PASSWORD;
 
 export const connectionOpt = {
